@@ -13,17 +13,16 @@ namespace Reloj_Project
         static double Xhora;
         static double XMinut;
         static double XSegons;
-        static double XMicroSegons;
         public static Boolean EsPrecis;
-        String XCompleta { get { return date.ToLongTimeString() + "." + XMicroSegons.ToString(); } }
+        String XCompleta { get { return date.ToString("HH:mm:ss.fff"); } }
         public static bool EsPrecis1 { get => EsPrecis; set => EsPrecis = value; }
 
         DateTime date;
         DispatcherTimer timer;
         static DependencyProperty XAML_Valor = DependencyProperty.Register("ValorX", typeof(String), typeof(Tiempo));
-        static DependencyProperty XAML_VHora = DependencyProperty.Register("ValorHora", typeof(String), typeof(Tiempo));
-        static DependencyProperty XAML_VMinutos = DependencyProperty.Register("ValorMin", typeof(String), typeof(Tiempo));
-        static DependencyProperty XAML_VSegundos = DependencyProperty.Register("ValorSeg", typeof(String), typeof(Tiempo));
+        static DependencyProperty XAML_VHora = DependencyProperty.Register("ValorHora", typeof(double), typeof(Tiempo));
+        static DependencyProperty XAML_VMinutos = DependencyProperty.Register("ValorMin", typeof(double), typeof(Tiempo));
+        static DependencyProperty XAML_VSegundos = DependencyProperty.Register("ValorSeg", typeof(double), typeof(Tiempo));
 
         public Tiempo()
         {
@@ -36,37 +35,29 @@ namespace Reloj_Project
 
         private void Incrementar(object sender, EventArgs e)
         {
-            //Horas
-            Xhora = date.Hour % 12;
-            float hora = (float) Xhora * 360 / 12 ;
-
-            XMinut = date.Minute;
-            float minutos = (float)XMinut * 360 / 60 ;
-
-            XSegons = date.Second;
-            XMicroSegons = date.Millisecond;
-            float segundos = (float)XSegons * 360 / 60;
-           
-
-            String Xmicros = "";
-            if (XMicroSegons < 10)
-            {
-                Xmicros += "00";
-            }
-            else if (XMicroSegons < 100) {
-                Xmicros += "0";
-            }
-            Xmicros += XMicroSegons.ToString();
-
             date = DateTime.Now;
-            //Texto
-            if (EsPrecis) { SetValue(XAML_Valor, date.ToLongTimeString() + "." + Xmicros); }
-            else { SetValue(XAML_Valor, date.ToLongTimeString()); }
+            //Conversor
+            if (EsPrecis) {
+
+                XSegons = (date.Second * 1000 + date.Millisecond) * 360 / 60000;
+                XMinut = (date.Second * 360 / 3600) + (date.Minute * 360 / 60);
+                Xhora = (date.Minute * 360 / 720) + ((date.Hour % 12) * 360 / 12);
+
+                SetValue(XAML_Valor, date.ToString("HH:mm:ss.fff"));
+            }
+            else {
+
+                Xhora = (date.Hour % 12) * 360 / 12;
+                XMinut = date.Minute * 360 / 60;
+                XSegons = date.Second * 360 / 60;
+
+                SetValue(XAML_Valor, date.ToString("HH:mm:ss"));
+            }
 
             //Grados
-            SetValue(XAML_VHora, hora.ToString());
-            SetValue(XAML_VMinutos, minutos.ToString());
-            SetValue(XAML_VSegundos, segundos.ToString());
+            SetValue(XAML_VHora, Xhora);
+            SetValue(XAML_VMinutos, XMinut);
+            SetValue(XAML_VSegundos, XSegons);
 
 
 
