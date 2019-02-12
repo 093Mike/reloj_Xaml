@@ -20,15 +20,17 @@ namespace Reloj_Project
     /// </summary>
     public partial class MainWindow : Window
     {
+        Tiempo r;
         public MainWindow()
         {
             InitializeComponent();
+            r = (Tiempo)Resources["conta"];
         }
 
         private void Reloj_mostrar_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (Tiempo.EsPrecis) { Tiempo.EsPrecis = false; }
-            else { Tiempo.EsPrecis = true; }
+            if (r.EsPrecis) { r.EsPrecis = false; }
+            else { r.EsPrecis = true; }
             
         }
     }
