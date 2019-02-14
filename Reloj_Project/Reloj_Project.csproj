@@ -64,9 +64,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Convert_Horas.cs" />
-    <Compile Include="Convert_Minutos.cs" />
-    <Compile Include="Convert_Segundos.cs" />
+    <Compile Include="ConvertTiempo.cs" />
     <Compile Include="Menutexto.cs" />
     <Compile Include="Resource1.Designer.cs">
       <AutoGen>True</AutoGen>

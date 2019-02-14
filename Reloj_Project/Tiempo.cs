@@ -11,7 +11,7 @@ namespace Reloj_Project
         double segonds;
         public Boolean esPrecis;
         string XCompleta { get {
-                if (EsPrecis) { return date.ToString("HH:mm:ss.fff"); }
+                if (esPrecis) { return date.ToString("HH:mm:ss.fff"); }
                 else { return date.ToString("HH:mm:ss"); }
         } }
 
@@ -43,9 +43,6 @@ namespace Reloj_Project
             minut = date.Minute;
             hora = date.Hour;
 
-            SetValue(XAML_VSegundos, segonds);
-            SetValue(XAML_VMinutos, minut);
-            SetValue(XAML_VHora, hora);
 
             //Conversor
             //if (EsPrecis) {
@@ -53,8 +50,18 @@ namespace Reloj_Project
             //    segonds = (date.Second * 1000 + date.Millisecond) * 360 / 60000;
             //    minut = (date.Second * 360 / 3600) + (date.Minute * 360 / 60);
             //    hora = (date.Minute * 360 / 720) + ((date.Hour % 12) * 360 / 12);
-            if (EsPrecis){SetValue(XAML_Valor, date.ToString("HH:mm:ss.fff"));}
-            if (!EsPrecis) { SetValue(XAML_Valor, date.ToString("HH:mm:ss")); }
+            if (EsPrecis){
+                SetValue(XAML_Valor, date.ToString("HH:mm:ss.fff"));
+                segonds = segonds+((double)date.Millisecond/1000);
+                minut = minut + (segonds / 60);
+                hora = hora + (minut / 60);
+
+            }
+            if (!EsPrecis) {
+                SetValue(XAML_Valor, date.ToString("HH:mm:ss"));}
+                SetValue(XAML_VMinutos, minut);
+                SetValue(XAML_VHora, hora);
+            SetValue(XAML_VSegundos, segonds);
             //}
 
 

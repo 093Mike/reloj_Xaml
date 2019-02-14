@@ -10,7 +10,7 @@
         Height="144.5" Width="341" MinWidth="561" MinHeight="471.5">
     <Window.Resources>
         <local:Tiempo x:Key="conta"/>
-        <local:Convert_Segundos x:Key="Segundos"/>
+        <local:ConvertTiempo x:Key="convertidor"/>
         <local:Convert_Minutos x:Key="Minutos"/>
         <local:Convert_Horas x:Key="Horas"/>
 
@@ -52,7 +52,7 @@
                 <TransformGroup>
                     <ScaleTransform/>
                     <SkewTransform/>
-                    <RotateTransform  Angle="{Binding ValorHora ,Converter={StaticResource Horas}}"/>
+                    <RotateTransform  Angle="{Binding ValorHora ,Converter={StaticResource convertidor}, ConverterParameter=horas}"/>
                     <TranslateTransform/>
                 </TransformGroup>
             </Rectangle.RenderTransform>
@@ -68,7 +68,7 @@
                 <TransformGroup>
                     <ScaleTransform/>
                     <SkewTransform/>
-                    <RotateTransform  Angle="{Binding ValorMin , Converter={StaticResource Minutos}}"/>
+                    <RotateTransform  Angle="{Binding ValorMin ,Converter={StaticResource convertidor}, ConverterParameter=seg_min}"/>
                     <TranslateTransform/>
                 </TransformGroup>
             </Rectangle.RenderTransform>
@@ -85,15 +85,7 @@
                 <TransformGroup>
                     <ScaleTransform/>
                     <SkewTransform/>
-                    <RotateTransform x:Name="Seg_convert">
-                        <RotateTransform.Angle>
-                            <MultiBinding Converter="{StaticResource Segundos}">
-                                <Binding Path="ValorSeg"/>
-                                <Binding Path="EsPrecis"/>
-                            </MultiBinding>
-                        </RotateTransform.Angle>
-                    </RotateTransform>
-                    <!--<RotateTransform  Angle="{Binding ValorSeg, Converter={StaticResource Segundos}}"/>-->
+                    <RotateTransform  Angle="{Binding ValorSeg ,Converter={StaticResource convertidor}, ConverterParameter=seg_min}"/>
                     <TranslateTransform/>
                 </TransformGroup>
             </Rectangle.RenderTransform>

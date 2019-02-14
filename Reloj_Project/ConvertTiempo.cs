@@ -8,16 +8,29 @@ using System.Windows.Data;
 
 namespace Reloj_Project
 {
-    class Convert_Horas : IValueConverter
+
+    class ConvertTiempo : IValueConverter
     {
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value = ((double)value % 12) * 360 / 12;
+            switch ((String)parameter) {
+
+                case "seg_min":
+                    return value = (double)value * 360 / 60;
+                case "horas":
+                    return value = ((double)value % 12) * 360 / 12;
+                default:
+                    return -1;
+
+
+            }
         }
+
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value = ((double)value % 12) * 360 / 12;
+            throw new NotImplementedException();
         }
     }
 }
