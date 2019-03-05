@@ -6,10 +6,14 @@
         xmlns:local="clr-namespace:Reloj_Project"
         mc:Ignorable="d"
         
-        Title = "HOLA"
+        Title = "Hola"
         Height="144.5" Width="341" MinWidth="561" MinHeight="471.5">
     <Window.Resources>
         <local:Tiempo x:Key="conta"/>
+        <local:ConvertTiempo x:Key="convertidor"/>
+        <local:Convert_Minutos x:Key="Minutos"/>
+        <local:Convert_Horas x:Key="Horas"/>
+
     </Window.Resources>
 
     <Grid>
@@ -26,7 +30,8 @@
 
         <Image Grid.Column="1" HorizontalAlignment="Center" 
                Height="243" Margin="10,10,10,10" 
-               Grid.Row="1" VerticalAlignment="Center" Width="256" Source="C:\Users\Mike\Desktop\COLE\reloj-imprimir.jpg">
+               Grid.Row="1" VerticalAlignment="Center" Width="256" 
+               Source="Recursos/reloj-2.jpg">
 
         </Image>
 
@@ -41,13 +46,13 @@
                    HorizontalAlignment="Center" 
                    Height="72" 
                    Margin="0,0,0,70" 
-                   Stroke="Black" VerticalAlignment="Center" Width="5" 
+                   Stroke="Black" VerticalAlignment="Center" Width="4" 
                    RenderTransformOrigin="0.462,1.01" Grid.Column="1" Grid.Row="1">
             <Rectangle.RenderTransform  >
                 <TransformGroup>
                     <ScaleTransform/>
                     <SkewTransform/>
-                    <RotateTransform  Angle="{Binding ValorHora}"/>
+                    <RotateTransform  Angle="{Binding ValorHora ,Converter={StaticResource convertidor}, ConverterParameter=horas}"/>
                     <TranslateTransform/>
                 </TransformGroup>
             </Rectangle.RenderTransform>
@@ -63,30 +68,33 @@
                 <TransformGroup>
                     <ScaleTransform/>
                     <SkewTransform/>
-                    <RotateTransform  Angle="{Binding ValorMin}"/>
+                    <RotateTransform  Angle="{Binding ValorMin ,Converter={StaticResource convertidor}, ConverterParameter=seg_min}"/>
                     <TranslateTransform/>
                 </TransformGroup>
             </Rectangle.RenderTransform>
         </Rectangle>
         <Rectangle x:Name="Segundos" DataContext="{StaticResource conta}"
-            Fill="#FFF4F4F5"
+            Fill="Black"
                    HorizontalAlignment="Center" 
                    Margin="0,0,0,98" 
-                   Stroke="Black" Width="3" 
+                   Stroke="Black" Width="1" 
                    RenderTransformOrigin="0.462,1.01" 
                    Height="100" VerticalAlignment="Center" 
                    Grid.Column="1" Grid.Row="1" >
-            <Rectangle.RenderTransform  >
+            <Rectangle.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
                     <SkewTransform/>
-                    <RotateTransform  Angle="{Binding ValorSeg}"/>
+                    <RotateTransform  Angle="{Binding ValorSeg ,Converter={StaticResource convertidor}, ConverterParameter=seg_min}"/>
                     <TranslateTransform/>
                 </TransformGroup>
             </Rectangle.RenderTransform>
         </Rectangle>
-        <Slider x:Name="sl_tiempo" Margin="108,12,108,11" VerticalAlignment="Center" Grid.ColumnSpan="3"/>
+        <Slider x:Name="sl_tiempo" Margin="39,12,34,11" VerticalAlignment="Center" Grid.ColumnSpan="3"/>
         <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Center" Height="10" Margin="0,0,0,0" Grid.Row="1" VerticalAlignment="Center" Width="10" Background="Black"/>
+        <TextBlock  DataContext="{StaticResource conta}" 
+                    HorizontalAlignment="Left" 
+                    Margin="51,88,0,0" Grid.Row="2" TextWrapping="Wrap" Text="{Binding ValorBool}" VerticalAlignment="Top"/>
 
 
     </Grid>
